@@ -28,8 +28,8 @@ func NewProductService(db *gorm.DB, rds *redis.Client) *ProductService {
 }
 func (s *ProductService) CreateProduct(payload *models.Product) error {
 	payload.ID = uuid.New().String()
-	payload.CreatedAt = time.Now()
-	payload.CreatedAt = time.Now()
+	now := time.Now()
+	payload.CreatedAt = &now
 	payload.UpdatedAt = time.Now()
 
 	s.redis.Del(ctx, "products:all")
@@ -38,6 +38,14 @@ func (s *ProductService) CreateProduct(payload *models.Product) error {
 }
 
 func (s *ProductService) UpdateProduct(payload *models.Product) error {
+	prd, err := s.GetByID(payload.ID)
+	if err != nil {
+		return err
+	}
+
+	if payload.CreatedAt == nil {
+		payload.CreatedAt = prd.CreatedAt
+	}
 	payload.UpdatedAt = time.Now()
 
 	s.redis.Del(ctx, "products:all")
