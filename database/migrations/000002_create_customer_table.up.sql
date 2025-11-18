@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS customers (
+  id VARCHAR(100) PRIMARY KEY,
+  name VARCHAR(255),
+  points INTEGER,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+)
