@@ -20,6 +20,16 @@ type GetProductRequest struct {
 	CreatedAt string `json:"created_at"`
 }
 
+func (c *ProductController) GetAll(ctx *gin.Context) {
+	data, err := c.Service.GetAll()
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, data)
+}
+
 func (c *ProductController) GetProductByDate(ctx *gin.Context) {
 	var payload GetProductRequest
 	if err := ctx.ShouldBindJSON(&payload); err != nil {

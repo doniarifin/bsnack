@@ -16,6 +16,16 @@ func NewCustomerController(service *services.CustomerService) *CustomerControlle
 	return &CustomerController{Service: service}
 }
 
+func (c *CustomerController) GetAll(ctx *gin.Context) {
+	data, err := c.Service.GetAll()
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, data)
+}
+
 func (c *CustomerController) Create(ctx *gin.Context) {
 	var cst models.Customer
 

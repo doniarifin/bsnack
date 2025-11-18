@@ -39,6 +39,7 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	// api.Use(middleware.JWTMiddleware())
 
 	//customer
+	api.GET("/customer", customerController.GetAll)
 	api.POST("/customer", customerController.Create)
 	api.POST("/customer/exchangepoint", customerController.ExchangePoint)
 
@@ -50,6 +51,7 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	// api.DELETE("/transaction/:id", productController.Delete)
 
 	//product
+	api.GET("/product", productController.GetAll)
 	api.POST("/product/getbydate", productController.GetProductByDate)
 	api.POST("/product", productController.Create)
 	api.PUT("/product/:id", productController.Update)
